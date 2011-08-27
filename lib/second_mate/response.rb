@@ -10,13 +10,13 @@ module SecondMate
     end
 
     def respond
-      return [404, {}, ["Not found. (#{response_path})"]] unless present?
+      return [404, {"Content-Type" => "text/plain"}, ["Not found. (#{response_path})"]] unless present?
 
       begin
         [200, {"Content-Type" => "application/json"}, response_body]
       rescue => e
-
-        [500, e, ['Internal server error.']]
+        p e
+        [500, {"Content-Type" => "text/plain"}, ['Internal server error.']]
       end
     end
 
