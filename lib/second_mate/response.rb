@@ -22,15 +22,15 @@ module SecondMate
 
     private
     def present?
-      File.exists?(sequenced_response_path) or File.exists?(response_path)
+       File.exists?(response_path) or sequenced_present?
     end
     
-    def loop?
-      File.exists? response_path(0)
+    def sequenced_present?
+      !!(sequenced_response_path && File.exists?(sequenced_response_path))
     end
 
-    def sequenced_present?
-      File.exists? sequenced_response_path
+    def loop?
+      File.exists? response_path(0)
     end
 
     def response_body
