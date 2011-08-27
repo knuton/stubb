@@ -1,7 +1,10 @@
 module SecondMate
   class Server
 
-    def initialize
+    attr_reader :base_dir
+
+    def initialize(base_dir = '')
+      @base_dir = base_dir
       @request_count = {}
     end
 
@@ -9,7 +12,11 @@ module SecondMate
       method = env.request_method
       path = env.path
       sequence = sequence(method, path)
-      response = Response.new :request_method => method, :request_path => path, :request_sequence => sequence
+      response = Response.new(
+        :base_dir => base_dir, :request_method => method,
+        :request_path => path, :request_sequence => sequence
+      )
+
       response.respond
     end
 

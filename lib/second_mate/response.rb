@@ -7,6 +7,7 @@ module SecondMate
       @request_method = options[:request_method]
       @request_path = options[:request_path]
       @request_sequence = options[:request_sequence] or 1
+      @base_dir = options[:base_dir]
     end
 
     def respond
@@ -66,8 +67,16 @@ module SecondMate
       end
     end
 
+    def base_dir
+      if @base_dir and not @base_dir.empty?
+        @base_dir
+      else
+        Dir.pwd
+      end
+    end
+
     def local_path
-      File.join request_path.gsub(/(\A\/|\/\Z)/, '').split('/')
+      File.join base_dir, request_path.gsub(/(\A\/|\/\Z)/, '').split('/')
     end
 
   end
