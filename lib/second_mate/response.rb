@@ -25,8 +25,12 @@ module SecondMate
       File.exists?(sequenced_response_path) or File.exists?(response_path)
     end
     
+    def loop?
+      File.exists? response_path(0)
+    end
+
     def sequenced_present?
-      File.exists?(sequenced_response_path)
+      File.exists? sequenced_response_path
     end
 
     def response_body
@@ -55,7 +59,11 @@ module SecondMate
 
     def sequenced_response_path
       sequence_members = Dir.glob response_path('*')
-      sequence_members[(request_sequence - 1) % sequence_members.size]
+      if loop?
+        sequence_members[(request_sequence - 1) % sequence_members.size]
+      else
+        request_sequence > sequence_members.size ? sequence_members.last : sequence_members[request_sequence - 1]
+      end
     end
 
     def local_path
