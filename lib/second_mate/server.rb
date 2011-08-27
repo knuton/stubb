@@ -3,14 +3,19 @@ module SecondMate
 
     attr_reader :base_dir
 
+    def self.start(options)
+      rack_server = Rack::Server.new options.merge :app => new
+      rack_server.start
+    end
+
     def initialize(base_dir = '')
       @base_dir = base_dir
       @request_count = {}
     end
 
     def call(env)
-      method = env.request_method
-      path = env.path
+      method = env['REQUEST_METHOD']
+      path = env['REQUEST_PATH']
       sequence = sequence(method, path)
       response = Response.new(
         :base_dir => base_dir, :request_method => method,
