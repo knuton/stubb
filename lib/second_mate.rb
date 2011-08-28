@@ -3,5 +3,5 @@ module SecondMate
 
 end
 
-require 'lib/second_mate/response'
-require 'lib/second_mate/server'
+require 'second_mate/response'
+require 'second_mate/server'

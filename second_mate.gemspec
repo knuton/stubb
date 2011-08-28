@@ -7,7 +7,10 @@ Gem::Specification.new do |s|
   s.authors     = ["Johannes Emerich"]
   s.email       = 'johannes@emerich.de'
   s.homepage    = 'http://github.com/knuton/second_mate'
-  s.files       = ["lib/second_mate.rb"]
+  s.files       = [
+    "lib/second_mate.rb", "lib/second_mate/server.rb",
+    "lib/second_mate/response.rb"
+  ]
     
   s.add_runtime_dependency "rack", "~>1.3.0"
 
