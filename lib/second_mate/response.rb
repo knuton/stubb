@@ -1,7 +1,7 @@
 module SecondMate
   class Response
 
-    attr_reader :request_method, :request_sequence, :request_params
+    attr_reader :request_method, :request_sequence, :request_params, :response_header, :response_body
 
     def initialize(options)
       @request_method   = options[:request_method]
@@ -12,23 +12,29 @@ module SecondMate
     end
 
     def respond
-      @response = [200, {"Content-Type" => "application/json"}, response_body]
+      construct
+      [200, response_header, response_body]
     rescue ResponseNotFound => e
-      @response = [404, {"Content-Type" => "text/plain"}, ["Not found. (#{response_path})"]]
+      [404, {"Content-Type" => "text/plain"}, ["Not found. (#{response_path})"]]
     rescue Exception => e
       p e
-      @response = [500, {"Content-Type" => "text/plain"}, ['Internal server error.']]
+      [500, {"Content-Type" => "text/plain"}, ['Internal server error.']]
     end
 
     private
-    def response_body
-      if sequenced_present?
-        File.open(sequenced_response_path, 'r') {|f| f.read }
+    def construct
+      used_file = if sequenced_present?
+        sequenced_response_path
       elsif present?
-        File.open(response_path, 'r') {|f| f.read }
+        response_path
       else
-        File.open(matched_response_path, 'r')  {|f| f.read }
+        matched_response_path
       end
+
+      @response_body = File.open(used_file, 'r')  {|f| f.read }
+      @response_header = {
+        "Content-Type" => SecondMate.mime_type(used_file[/\.[^.]+$/])
+      }
     end
 
     # Request data
@@ -37,9 +43,29 @@ module SecondMate
       request_path.split '/'
     end
 
+    def request_dirtree
+      request_hierarchy[0..-2]
+    end
+
+    def request_hierarchy_without_extension
+      request_dirtree << request_resourcename
+    end
+
     def request_path
       # Strip slashes at string end and start
       @request_path.gsub /(\A\/|\/\Z)/, ''
+    end
+
+    def request_filename
+      request_hierarchy.last
+    end
+
+    def request_resourcename
+      request_filename.split('.')[0]
+    end
+
+    def request_extension
+      request_filename.split('.')[1]
     end
 
     # Direct
@@ -100,15 +126,19 @@ module SecondMate
 
     # Path helpers
 
+    def response_extension
+      request_extension || 'json'
+    end
+
     def local_path(hierarchy = nil)
-      File.join base_dir, hierarchy || request_hierarchy
+      File.join base_dir, hierarchy || request_hierarchy_without_extension
     end
 
     def request_options_as_file_ending(sequence = nil)
       if sequence
-        "#{request_method}.#{sequence}.json"
+        "#{request_method}.#{sequence}.#{response_extension}"
       else
-        "#{request_method}.json"
+        "#{request_method}.#{response_extension}"
       end
     end
 

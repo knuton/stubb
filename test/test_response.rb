@@ -39,6 +39,16 @@ class TestResponse < Test::Unit::TestCase
     assert r.respond[2] == "{'id':'nested_member'}\n", r.respond[2]
   end
 
+  # Getting files with extensions
+
+  def test_get_file_with_extension
+    r = SecondMate::Response.new :base_dir => 'test/fixtures',
+      :request_method => 'GET', :request_path => '/file.txt',
+      :request_sequence => 1
+    assert r.respond[0] == 200
+    assert r.respond[2] == "text\n"
+  end
+
   # HTTP Methods
 
   def test_post_to_collection
