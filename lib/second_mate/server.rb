@@ -16,9 +16,10 @@ module SecondMate
     end
 
     def call(env)
-      method = env['REQUEST_METHOD']
-      path = env['REQUEST_PATH']
+      method   = env['REQUEST_METHOD']
+      path     = env['REQUEST_PATH']
       sequence = sequence(method, path)
+
       response = Response.new(
         :base_dir => base_dir, :request_method => method,
         :request_path => path, :request_sequence => sequence
