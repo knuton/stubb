@@ -23,7 +23,7 @@ module SecondMate
   def self.app
     Rack::Builder.new {
       use Rack::CommonLogger
-      #use SecondMate::Counter
+      use SecondMate::Counter
       
       run Rack::Cascade.new([SequenceFinder.new, NaiveFinder.new, MatchFinder.new])
     }.to_app
@@ -38,6 +38,7 @@ module SecondMate
 end
 
 require 'second_mate/request'
+require 'second_mate/counter'
 require 'second_mate/finder'
 require 'second_mate/naive_finder'
 require 'second_mate/sequence_finder'

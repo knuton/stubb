@@ -28,6 +28,10 @@ module SecondMate
       path_info.gsub /(\A\/|\/\Z)/, ''
     end
 
+    def sequence_index
+      @env['REQUEST_SEQUENCE_INDEX'] || 1
+    end
+
   end
 
 end
