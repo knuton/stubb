@@ -20,19 +20,20 @@ module SecondMate
     end
   end
 
-  def self.app
+  def self.app(options = {})
     Rack::Builder.new {
       use Rack::CommonLogger
       use SecondMate::Counter
       
-      run Rack::Cascade.new([SequenceFinder.new, NaiveFinder.new, MatchFinder.new])
+      run Rack::Cascade.new([SequenceFinder.new(options[:root]), NaiveFinder.new(options[:root]), MatchFinder.new(options[:root])])
     }.to_app
   end
 
   def self.run(options = {})
-    Rack::Handler.default.run app, {
-      :Port => 4040
-    }.update(options)
+    Rack::Handler.default.run(
+      app({:root => ''}.update(options)),
+      {:Port => 4040}.update(options)
+    )
   end
 
 end
