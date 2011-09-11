@@ -6,7 +6,7 @@ module SecondMate
   end
 
   @config = {
-   :matcher_prefix => ':'
+   :matcher_pattern => '_*_'
   }
 
   def self.method_missing(m, *attrs)
