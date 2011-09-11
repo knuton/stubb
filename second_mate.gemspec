@@ -14,6 +14,8 @@ Gem::Specification.new do |s|
     "LICENSE", "README.markdown"
   ]
     
+  s.add_development_dependency 'rake'
+
   s.add_runtime_dependency "rack", ">=1.2.0"
 
 end
