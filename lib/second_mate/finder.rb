@@ -37,11 +37,11 @@ module SecondMate
       File.join root, relative_path
     end
 
-    def log(message)
+    def log(*messages)
       if request.env['rack.errors'] && request.env['rack.errors'].respond_to?('write')
-        env['rack.errors'].write message
+        env['rack.errors'].write messages.join("\n")
       else
-        puts message
+        puts *messages
       end
     end
 
