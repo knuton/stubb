@@ -12,28 +12,24 @@ module SecondMate
     end
 
     private
-    # REFACTOR Break out finding of literal matches
     def projected_path
       built_path  = []
       last_is_dir = false 
       request.path_parts.each_with_index do |level, index|
-        if File.directory? local_path_for(built_path + [level])
-          built_path << level
+        if match = literal_directory(built_path, level)
           last_is_dir = true
-        elsif File.exists? local_path_for(built_path + ["#{level}.#{request_options_as_file_ending}"])
-          built_path << "#{level}.#{request_options_as_file_ending}"
+        elsif match = literal_file(built_path, level)
+          last_is_dir = false
+        elsif match = matching_directory(built_path)
+          last_is_dir = true
+        elsif match = matching_file(built_path)
           last_is_dir = false
         else
-          if match = matching_directory(built_path)
-            last_is_dir = true
-          elsif match = matching_file(built_path)
-            last_is_dir = false
-          else
-            raise NoMatch unless match
-          end
-
-          built_path << match
+          log 'path', built_path, 'level', level, 'match', match
+          raise NoMatch
         end
+
+        built_path << match
       end
 
       if last_is_dir
@@ -41,6 +37,15 @@ module SecondMate
       else
         local_path_for built_path
       end
+    end
+
+    def literal_directory(current_path, level)
+      File.directory?(local_path_for(current_path + [level])) ? level: nil
+    end
+
+    def literal_file(current_path, level)
+      filename = "#{level}.#{request_options_as_file_ending}"
+      File.exists?(local_path_for(current_path + [filename])) ? filename : nil
     end
 
     def matching_directory(current_path)
