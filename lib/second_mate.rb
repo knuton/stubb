@@ -13,8 +13,8 @@ module SecondMate
     # Ease access to @config
     if @config[m.to_sym]
       @config[m.to_sym]
-    elsif @config[m.chomp('=').to_sym]
-      @config[m.chomp('=').to_sym] = attrs[0]
+    elsif @config[m.to_s.chomp('=').to_sym]
+      @config[m.to_s.chomp('=').to_sym] = attrs[0]
     else
       super
     end
