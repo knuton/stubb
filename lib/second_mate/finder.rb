@@ -16,7 +16,7 @@ module SecondMate
     rescue Errno::ENOENT, Errno::ELOOP
       [404, {"Content-Type" => "text/plain"}, ["Not found."]]
     rescue Exception => e
-      p e
+      log e.message, e.backtrace.join("\n")
       [500, {'Content-Type' => 'text/plain'}, 'Internal server error.']
     end
 
@@ -39,9 +39,9 @@ module SecondMate
 
     def log(*messages)
       if request.env['rack.errors'] && request.env['rack.errors'].respond_to?('write')
-        env['rack.errors'].write messages.join("\n")
+        env['rack.errors'].write messages.join(" ")
       else
-        puts *messages
+        puts messages.join(" ")
       end
     end
 
