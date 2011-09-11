@@ -33,12 +33,16 @@ module SecondMate
       File.exists? local_path_for(relative_path)
     end
 
-    def file_contents(relative_path)
-      File.open(local_path_for(relative_path), 'r')  {|f| f.read }
-    end
-
     def local_path_for(relative_path)
       File.join root, relative_path
+    end
+
+    def log(message)
+      if request.env['rack.errors'] && request.env['rack.errors'].respond_to?('write')
+        env['rack.errors'].write message
+      else
+        puts message
+      end
     end
 
   end

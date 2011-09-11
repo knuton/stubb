@@ -5,15 +5,17 @@ module SecondMate
   class SequenceFinder < Finder
     private
     def respond
-      response_body = file_contents(projected_path)
+      response_body = File.open(projected_path, 'r')  {|f| f.read }
       Rack::Response.new(response_body).finish
-    rescue NoSuchSequence
-      [404, {}, 'No such sequence.']
+    rescue NoSuchSequence => e
+      log e.message
+      log e.backtrace.join "\n"
+      [404, {}, "No such sequence."]
     end
 
     def projected_path
-      sequence_members = Dir.glob sequenced_path('*')
-      raise NoSuchSequence if sequence_members.empty?
+      sequence_members = Dir.glob local_path_for(sequenced_path_pattern)
+      raise NoSuchSequence.new("Nothing found for sequence pattern `#{sequenced_path_pattern}`.") if sequence_members.empty?
 
       if loop?
         sequence_members[(request.sequence_index - 1) % sequence_members.size]
@@ -28,6 +30,10 @@ module SecondMate
       else
         "#{request.relative_path}.#{request_options_as_file_ending(index)}"
       end
+    end
+
+    def sequenced_path_pattern
+      sequenced_path('[0-9]')
     end
 
     def request_options_as_file_ending(index)
