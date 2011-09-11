@@ -12,23 +12,50 @@ module SecondMate
     end
 
     private
+    # REFACTOR Break out finding of literal matches
     def projected_path
-      built_path = []
+      built_path  = []
+      last_is_dir = false 
       request.path_parts.each_with_index do |level, index|
-        log built_path, local_path_for(built_path)
-        if File.exists? local_path_for(built_path + [level])
+        if File.directory? local_path_for(built_path + [level])
           built_path << level
+          last_is_dir = true
+        elsif File.exists? local_path_for(built_path + ["#{level}.#{request_options_as_file_ending}"])
+          built_path << "#{level}.#{request_options_as_file_ending}"
+          last_is_dir = false
         else
-          matchers = Dir.glob(local_path_for(built_path + [SecondMate.matcher_pattern]))
-          matchers = Dir.glob(local_path_for(built_path + ["#{SecondMate.matcher_pattern}.#{request_options_as_file_ending}"])) if matchers.empty?
+          if match = matching_directory(built_path)
+            last_is_dir = true
+          elsif match = matching_file(built_path)
+            last_is_dir = false
+          else
+            raise NoMatch unless match
+          end
 
-          raise NoMatch if matchers.empty?
-
-          built_path << File.split(matchers.first).last
+          built_path << match
         end
       end
 
-      local_path_for built_path
+      if last_is_dir
+        File.join local_path_for(built_path), request_options_as_file_ending
+      else
+        local_path_for built_path
+      end
+    end
+
+    def matching_directory(current_path)
+      matches = Dir.glob local_path_for(current_path + [SecondMate.matcher_pattern])
+      for match in matches
+        continue unless File.directory? match
+        return File.split(match).last
+      end
+      nil
+    end
+
+    def matching_file(current_path)
+      matches = Dir.glob local_path_for(current_path + ["#{SecondMate.matcher_pattern}.#{request_options_as_file_ending}"])
+
+      matches.empty? ? nil : File.split(matches.first).last
     end
 
   end
