@@ -9,7 +9,6 @@ module SecondMate
       Rack::Response.new(response_body).finish
     rescue NoSuchSequence => e
       log e.message
-      log e.backtrace.join "\n"
       [404, {}, "No such sequence."]
     end
 
