@@ -25,7 +25,7 @@ module SecondMate
       use Rack::CommonLogger
       use SecondMate::Counter
       
-      run Rack::Cascade.new([SequenceFinder.new(options[:root]), NaiveFinder.new(options[:root]), MatchFinder.new(options[:root])])
+      run Rack::Cascade.new([SequenceFinder.new(options[:root]), NaiveFinder.new(options[:root]), SequenceMatchFinder.new(options[:root]), MatchFinder.new(options[:root])])
     }.to_app
   end
 
@@ -44,3 +44,4 @@ require 'second_mate/finder'
 require 'second_mate/naive_finder'
 require 'second_mate/sequence_finder'
 require 'second_mate/match_finder'
+require 'second_mate/sequence_match_finder'

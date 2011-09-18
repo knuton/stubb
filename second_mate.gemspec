@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
     "lib/second_mate.rb", "lib/second_mate/request.rb",
     "lib/second_mate/finder.rb", "lib/second_mate/naive_finder.rb",
     "lib/second_mate/sequence_finder.rb", "lib/second_mate/match_finder.rb",
-    "LICENSE", "README.markdown"
+    "lib/second_mate/sequence_match_finder.rb", "LICENSE", "README.markdown"
   ]
     
   s.add_development_dependency 'rake'
