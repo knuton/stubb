@@ -16,11 +16,15 @@ module SecondMate
       sequence_members = Dir.glob local_path_for(sequenced_path_pattern)
       raise NoSuchSequence.new("Nothing found for sequence pattern `#{sequenced_path_pattern}`.") if sequence_members.empty?
 
-      if loop?
+      loop? ?  pick_loop_member(sequence_members) : pick_stall_member(sequence_members)
+    end
+
+    def pick_loop_member(sequence_members)
         sequence_members[(request.sequence_index - 1) % sequence_members.size]
-      else
+    end
+
+    def pick_stall_member(sequence_members)
         request.sequence_index > sequence_members.size ? sequence_members.last : sequence_members[request.sequence_index - 1]
-      end
     end
 
     def sequenced_path(index)
