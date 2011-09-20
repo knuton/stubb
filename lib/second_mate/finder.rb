@@ -4,8 +4,9 @@ module SecondMate
     
     attr_accessor :request, :root
 
-    def initialize(root = '')
-      @root = File.expand_path root
+    def initialize(options = {})
+      @root = File.expand_path options[:root] || ''
+      @verbose = options[:verbose] || false
     end
 
     def call(env)
@@ -16,7 +17,7 @@ module SecondMate
     rescue Errno::ENOENT, Errno::ELOOP
       [404, {"Content-Type" => "text/plain"}, ["Not found."]]
     rescue Exception => e
-      log e.message, e.backtrace.join("\n")
+      debug e.message, e.backtrace.join("\n")
       [500, {'Content-Type' => 'text/plain'}, 'Internal server error.']
     end
 
@@ -37,9 +38,13 @@ module SecondMate
       File.join root, relative_path
     end
 
+    def debug(*messages)
+      log(*messages) if @verbose
+    end
+
     def log(*messages)
       if request.env['rack.errors'] && request.env['rack.errors'].respond_to?('write')
-        env['rack.errors'].write messages.join(" ")
+        request.env['rack.errors'].write messages.join(" ") << "\n"
       else
         puts messages.join(" ")
       end

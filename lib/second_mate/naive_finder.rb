@@ -4,7 +4,9 @@ module SecondMate
     
     private
     def respond
-      response_body = File.open(local_path_for(projected_path), 'r')  {|f| f.read }
+      path = local_path_for(projected_path)
+      debug "Trying `#{path}`."
+      response_body = File.open(path, 'r')  {|f| f.read }
       Rack::Response.new(response_body).finish
     end
 

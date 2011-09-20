@@ -16,7 +16,6 @@ module SecondMate
         elsif match = matching_file(built_path, sequence_index)
           last_is_dir = false
         else
-          #log 'path', built_path, 'level', level, 'match', match
           return 'NOT FOUND!'
         end
 

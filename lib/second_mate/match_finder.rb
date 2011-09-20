@@ -7,7 +7,7 @@ module SecondMate
       response_body = File.open(projected_path, 'r')  {|f| f.read }
       Rack::Response.new(response_body).finish
     rescue NoMatch => e
-      log e.message
+      debug e.message
       [404, {}, "No match."]
     end
 
@@ -25,7 +25,6 @@ module SecondMate
         elsif match = matching_file(built_path)
           last_is_dir = false
         else
-          log 'path', built_path, 'level', level, 'match', match
           raise NoMatch
         end
 

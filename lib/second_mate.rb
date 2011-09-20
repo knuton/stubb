@@ -25,7 +25,7 @@ module SecondMate
       use Rack::CommonLogger
       use SecondMate::Counter
       
-      run Rack::Cascade.new([SequenceFinder.new(options[:root]), NaiveFinder.new(options[:root]), SequenceMatchFinder.new(options[:root]), MatchFinder.new(options[:root])])
+      run Rack::Cascade.new([SequenceFinder.new(options), NaiveFinder.new(options), SequenceMatchFinder.new(options), MatchFinder.new(options)])
     }.to_app
   end
 

@@ -8,7 +8,7 @@ module SecondMate
       response_body = File.open(projected_path, 'r')  {|f| f.read }
       Rack::Response.new(response_body).finish
     rescue NoSuchSequence => e
-      log e.message
+      debug e.message
       [404, {}, "No such sequence."]
     end
 
