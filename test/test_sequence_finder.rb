@@ -5,7 +5,7 @@ require 'second_mate'
 class TestSequenceFinder < Test::Unit::TestCase
 
   def setup
-    @finder = SecondMate::SequenceFinder.new 'test/fixtures'
+    @finder = SecondMate::SequenceFinder.new :root => 'test/fixtures'
   end
 
   def test_get_stalling_collection

@@ -5,7 +5,7 @@ require 'second_mate'
 class TestNaiveFinder < Test::Unit::TestCase
 
   def setup
-    @finder = SecondMate::NaiveFinder.new 'test/fixtures'
+    @finder = SecondMate::NaiveFinder.new :root => 'test/fixtures'
   end
 
   def test_get_collection

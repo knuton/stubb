@@ -5,7 +5,7 @@ require 'second_mate'
 class TestMatchFinder < Test::Unit::TestCase
 
   def setup
-    @finder = SecondMate::MatchFinder.new 'test/fixtures'
+    @finder = SecondMate::MatchFinder.new :root => 'test/fixtures'
   end
 
   def test_trailing_matching_member
