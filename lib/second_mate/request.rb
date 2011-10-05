@@ -7,7 +7,8 @@ module SecondMate
     end
 
     def path_dir_parts
-      File.dirname(relative_path).split '/'
+      parts = path_parts
+      parts.size > 1 ? parts[0..-2] : []
     end
 
     def file_name
@@ -15,12 +16,24 @@ module SecondMate
     end
 
     def resource_name
-      file_name.split('.')[0..-2].join('.')
+      parts = file_name.split('.')
+      parts.size > 1 ? parts[0..-2].join('.') : parts.first
+    end
+
+    def resource_path
+      File.join((path_dir_parts << resource_name).compact)
     end
 
     def extension
-      # TODO Accept-Header
+      extension_by_path.empty? ? extension_by_header : extension_by_path
+    end
+
+    def extension_by_path
       File.extname(relative_path)
+    end
+
+    def extension_by_header
+      Rack::Mime::MIME_TYPES.invert[@env['HTTP_ACCEPT']]
     end
 
     def relative_path

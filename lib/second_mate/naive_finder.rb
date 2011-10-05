@@ -11,10 +11,10 @@ module SecondMate
     end
 
     def projected_path
-      if File.directory? local_path_for(request.relative_path)
-        File.join request.relative_path, request_options_as_file_ending
+      if File.directory? local_path_for(request.resource_path)
+        File.join request.resource_path, request_options_as_file_ending
       else
-        "#{request.relative_path}.#{request_options_as_file_ending}"
+        "#{request.resource_path}.#{request_options_as_file_ending}"
       end
     end
 
