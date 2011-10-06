@@ -18,12 +18,14 @@ class TestNaiveFinder < Test::Unit::TestCase
     response = @finder.call 'REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/collection.json'
     assert_equal 200, response.first
     assert_equal ['GET collection.json'], response.last.body
+    assert_equal 'application/json', response[1]['Content-Type']
   end
 
   def test_get_collection_as_json_implicitly
     response = @finder.call 'REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/collection', 'HTTP_ACCEPT' => 'application/json'
     assert_equal 200, response.first
     assert_equal ['GET collection.json'], response.last.body
+    assert_equal 'application/json', response[1]['Content-Type']
   end
 
   def test_post_collection
