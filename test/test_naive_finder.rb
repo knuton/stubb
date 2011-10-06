@@ -40,5 +40,19 @@ class TestNaiveFinder < Test::Unit::TestCase
     assert_equal ['GET member'], response.last.body
   end
 
+  def test_get_member_as_json_explicitly
+    response = @finder.call 'REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/collection/member.json'
+    assert_equal 200, response.first
+    assert_equal ['GET member.json'], response.last.body
+    assert_equal 'application/json', response[1]['Content-Type']
+  end
+
+  def test_get_member_as_json_implicitly
+    response = @finder.call 'REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/collection/member', 'HTTP_ACCEPT' => 'application/json'
+    assert_equal 200, response.first
+    assert_equal ['GET member.json'], response.last.body
+    assert_equal 'application/json', response[1]['Content-Type']
+  end
+
 end
 
