@@ -10,10 +10,6 @@ module SecondMate
       Rack::Response.new(response_body, 200, {'Content-Type' => content_type}).finish
     end
 
-    def content_type
-      Rack::Mime.mime_type(request.extension) || "text/html"
-    end
-
     def projected_path
       if File.directory? local_path_for(request.resource_path)
         File.join request.resource_path, request_options_as_file_ending

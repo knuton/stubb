@@ -5,7 +5,7 @@ module SecondMate
   class MatchFinder < Finder
     def respond
       response_body = File.open(projected_path, 'r')  {|f| f.read }
-      Rack::Response.new(response_body).finish
+      Rack::Response.new(response_body, 200, {'Content-Type' => content_type}).finish
     rescue NoMatch => e
       debug e.message
       [404, {}, "No match."]
@@ -14,7 +14,7 @@ module SecondMate
     private
     def projected_path
       built_path  = []
-      last_is_dir = false 
+      last_is_dir = false
       request.path_parts.each_with_index do |level, index|
         if match = literal_directory(built_path, level)
           last_is_dir = true
@@ -43,6 +43,8 @@ module SecondMate
     end
 
     def literal_file(current_path, level)
+      parts = level.split('.')
+      level = parts.size > 1 ? parts[0..-2].join('.') : parts.first
       filename = "#{level}.#{request_options_as_file_ending}"
       File.exists?(local_path_for(current_path + [filename])) ? filename : nil
     end

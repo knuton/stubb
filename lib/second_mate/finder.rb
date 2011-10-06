@@ -38,6 +38,10 @@ module SecondMate
       File.join root, relative_path
     end
 
+    def content_type
+      Rack::Mime.mime_type(request.extension) || "text/html"
+    end
+
     def debug(*messages)
       log(*messages) if @verbose
     end
