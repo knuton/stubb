@@ -33,7 +33,12 @@ module SecondMate
     end
 
     def extension_by_header
-      Rack::Mime::MIME_TYPES.invert[@env['HTTP_ACCEPT']]
+      Rack::Mime::MIME_TYPES.invert[accept]
+    end
+
+    # TODO parse, sort
+    def accept
+      @env['HTTP_ACCEPT'].to_s.split(',').first
     end
 
     def relative_path
