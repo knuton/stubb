@@ -7,7 +7,7 @@ module SecondMate
       path = local_path_for(projected_path)
       debug "Trying `#{path}`."
       response_body = File.open(path, 'r')  {|f| f.read }
-      Rack::Response.new(response_body, 200, {'Content-Type' => content_type}).finish
+      Response.new(response_body, request.params, 200, {'Content-Type' => content_type}).finish
     end
 
     def projected_path

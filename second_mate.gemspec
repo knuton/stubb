@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'second_mate'
   s.version     = '0.0.9'
-  s.date        = '2011-10-05'
+  s.date        = '2011-10-31'
   s.summary     = 'Specify REST API stubs using your file system'
   s.description = 'Stubb is the second mate.'
   s.authors     = ['Johannes Emerich']
@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.files       = [
     'lib/second_mate.rb',
     'lib/second_mate/request.rb',
+    'lib/second_mate/response.rb',
     'lib/second_mate/counter.rb',
     'lib/second_mate/finder.rb',
     'lib/second_mate/naive_finder.rb',

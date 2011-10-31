@@ -39,6 +39,7 @@ module SecondMate
 end
 
 require 'second_mate/request'
+require 'second_mate/response'
 require 'second_mate/counter'
 require 'second_mate/finder'
 require 'second_mate/naive_finder'
