@@ -1,5 +1,4 @@
 require 'test/unit'
-require 'rack/mock'
 
 require 'second_mate'
 
@@ -10,7 +9,6 @@ class TestMatchFinder < Test::Unit::TestCase
   end
 
   def test_trailing_matching_collection
-    #response = @finder.call 'REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/matching/dynamic'
     response = @finder.call Rack::MockRequest.env_for('/matching/dynamic', 'REQUEST_METHOD' => 'GET')
     assert_equal 200, response.first
     assert_equal ['GET matching collection'], response.last.body
