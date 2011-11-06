@@ -1,4 +1,5 @@
 require 'test/unit'
+require 'rack/mock'
 
 require 'second_mate'
 
@@ -9,60 +10,61 @@ class TestMatchFinder < Test::Unit::TestCase
   end
 
   def test_trailing_matching_collection
-    response = @finder.call 'REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/matching/dynamic'
+    #response = @finder.call 'REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/matching/dynamic'
+    response = @finder.call Rack::MockRequest.env_for('/matching/dynamic', 'REQUEST_METHOD' => 'GET')
     assert_equal 200, response.first
     assert_equal ['GET matching collection'], response.last.body
   end
 
   def test_trailing_matching_collection_as_json_explicitly
-    response = @finder.call 'REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/matching/dynamic.json'
+    response = @finder.call Rack::MockRequest.env_for('/matching/dynamic.json', 'REQUEST_METHOD' => 'GET')
     assert_equal 200, response.first
     assert_equal ['GET matching collection.json'], response.last.body
     assert_equal 'application/json', response[1]['Content-Type']
   end
 
   def test_trailing_matching_collection_as_json_implicitly
-    response = @finder.call 'REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/matching/dynamic', 'HTTP_ACCEPT' => 'application/json'
+    response = @finder.call Rack::MockRequest.env_for('/matching/dynamic', 'REQUEST_METHOD' => 'GET', 'HTTP_ACCEPT' => 'application/json')
     assert_equal 200, response.first
     assert_equal ['GET matching collection.json'], response.last.body
     assert_equal 'application/json', response[1]['Content-Type']
   end
 
   def test_embedded_matching_collection
-    response = @finder.call 'REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/matching/dynamic/static'
+    response = @finder.call Rack::MockRequest.env_for('/matching/dynamic/static', 'REQUEST_METHOD' => 'GET')
     assert_equal 200, response.first
     assert_equal ['GET static'], response.last.body
   end
 
   def test_embedded_matching_collection_as_json_explicitly
-    response = @finder.call 'REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/matching/dynamic/static.json'
+    response = @finder.call Rack::MockRequest.env_for('/matching/dynamic/static.json', 'REQUEST_METHOD' => 'GET')
     assert_equal 200, response.first
     assert_equal ['GET static.json'], response.last.body
     assert_equal 'application/json', response[1]['Content-Type']
   end
 
   def test_trailing_matching_collection_as_json_implicitly
-    response = @finder.call 'REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/matching/dynamic/static', 'HTTP_ACCEPT' => 'application/json'
+    response = @finder.call Rack::MockRequest.env_for('/matching/dynamic/static', 'REQUEST_METHOD' => 'GET', 'HTTP_ACCEPT' => 'application/json')
     assert_equal 200, response.first
     assert_equal ['GET static.json'], response.last.body
     assert_equal 'application/json', response[1]['Content-Type']
   end
 
   def test_trailing_matching_member
-    response = @finder.call 'REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/matching/collection/dynamic'
+    response = @finder.call Rack::MockRequest.env_for('/matching/collection/dynamic', 'REQUEST_METHOD' => 'GET')
     assert_equal 200, response.first
     assert_equal ['GET matching member'], response.last.body
   end
 
   def test_trailing_matching_member_as_json_explicitly
-    response = @finder.call 'REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/matching/collection/dynamic.json'
+    response = @finder.call Rack::MockRequest.env_for('/matching/collection/dynamic.json', 'REQUEST_METHOD' => 'GET')
     assert_equal 200, response.first
     assert_equal ['GET matching member.json'], response.last.body
     assert_equal 'application/json', response[1]['Content-Type']
   end
 
   def test_trailing_matching_member_as_json_implicitly
-    response = @finder.call 'REQUEST_METHOD' => 'GET', 'PATH_INFO' => '/matching/collection/dynamic.json', 'HTTP_ACCEPT' => 'application/json'
+    response = @finder.call Rack::MockRequest.env_for('/matching/collection/dynamic.json', 'REQUEST_METHOD' => 'GET', 'HTTP_ACCEPT' => 'application/json')
     assert_equal 200, response.first
     assert_equal ['GET matching member.json'], response.last.body
     assert_equal 'application/json', response[1]['Content-Type']

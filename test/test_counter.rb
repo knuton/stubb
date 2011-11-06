@@ -5,7 +5,7 @@ require 'second_mate'
 class TestCounter < Test::Unit::TestCase
 
   def setup
-    @env = { 'PATH_INFO' => '/request/path' }
+    @env = Rack::MockRequest.env_for '/request/path'
     @counter = SecondMate::Counter.new lambda { |env| [200, {}, [env['REQUEST_SEQUENCE_INDEX']]] }
   end
 
@@ -23,7 +23,7 @@ class TestCounter < Test::Unit::TestCase
 
   def test_side_effects
     @counter.call(@env)
-    result = @counter.call({ 'PATH_INFO' => '/request/other' })
+    result = @counter.call Rack::MockRequest.env_for('/request/other')
     assert_equal 1, result.last.last
   end
 

@@ -5,7 +5,7 @@ require 'second_mate'
 class TestRequest < Test::Unit::TestCase
 
   def setup
-    @request = SecondMate::Request.new 'PATH_INFO' => '/test/the/functionality.html.erb'
+    @request = SecondMate::Request.new Rack::MockRequest.env_for('/test/the/functionality.html.erb')
   end
 
   def test_path_parts
