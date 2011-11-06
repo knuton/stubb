@@ -52,5 +52,17 @@ class TestSequenceMatchFinder < Test::Unit::TestCase
     assert_equal ['GET matching member 0'], response.last.body
   end
 
+  def test_get_matched_template_sequence
+    response = @finder.call Rack::MockRequest.env_for('/matching/sequences/dynamic/stalling/template?name=Karl', 'REQUEST_METHOD' => 'GET', 'REQUEST_SEQUENCE_INDEX' => 1)
+    assert_equal 200, response.first
+    assert_equal ['GET matching Karl 1'], response.last.body
+  end
+
+  def test_post_matched_template_sequence
+    response = @finder.call Rack::MockRequest.env_for('/matching/sequences/dynamic/stalling/template', 'REQUEST_METHOD' => 'POST', 'REQUEST_SEQUENCE_INDEX' => 1, :input => 'name=Karl')
+    assert_equal 200, response.first
+    assert_equal ['POST matching Karl 1'], response.last.body
+  end
+
 end
 

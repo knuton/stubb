@@ -6,7 +6,7 @@ module SecondMate
     private
     def respond
       response_body = File.open(projected_path, 'r')  {|f| f.read }
-      Rack::Response.new(response_body).finish
+      Response.new(response_body, request.params, 200, {'Content-Type' => content_type}).finish
     rescue NoSuchSequence => e
       debug e.message
       [404, {}, "No such sequence."]

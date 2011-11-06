@@ -5,7 +5,7 @@ module SecondMate
   class MatchFinder < Finder
     def respond
       response_body = File.open(projected_path, 'r')  {|f| f.read }
-      Rack::Response.new(response_body, 200, {'Content-Type' => content_type}).finish
+      Response.new(response_body, request.params, 200, {'Content-Type' => content_type}).finish
     rescue NoMatch => e
       debug e.message
       [404, {}, "No match."]

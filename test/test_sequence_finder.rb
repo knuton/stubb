@@ -52,5 +52,17 @@ class TestSequenceFinder < Test::Unit::TestCase
     assert_equal ['GET member 0'], response.last.body
   end
 
+  def test_get_template_sequence
+    response = @finder.call Rack::MockRequest.env_for('/stalling_sequence/template?name=Karl', 'REQUEST_METHOD' => 'GET', 'REQUEST_SEQUENCE_INDEX' => 1)
+    assert_equal 200, response.first
+    assert_equal ['GET Karl 1'], response.last.body
+  end
+
+  def test_post_template_sequence
+    response = @finder.call Rack::MockRequest.env_for('/stalling_sequence/template', 'REQUEST_METHOD' => 'POST', 'REQUEST_SEQUENCE_INDEX' => 1, :input => 'name=Karl')
+    assert_equal 200, response.first
+    assert_equal ['POST Karl 1'], response.last.body
+  end
+
 end
 

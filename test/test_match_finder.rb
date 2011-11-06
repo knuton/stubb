@@ -68,4 +68,15 @@ class TestMatchFinder < Test::Unit::TestCase
     assert_equal 'application/json', response[1]['Content-Type']
   end
 
+  def test_get_matching_member_template
+    response = @finder.call Rack::MockRequest.env_for('/matching/dynamic/template?name=Karl', 'REQUEST_METHOD' => 'GET')
+    assert_equal 200, response.first
+    assert_equal ['GET matching Karl'], response.last.body
+  end
+
+  def test_post_matching_member_template
+    response = @finder.call Rack::MockRequest.env_for('/matching/dynamic/template', 'REQUEST_METHOD' => 'POST', :input => 'name=Karl')
+    assert_equal 200, response.first
+    assert_equal ['POST matching Karl'], response.last.body
+  end
 end

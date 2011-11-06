@@ -60,5 +60,11 @@ class TestNaiveFinder < Test::Unit::TestCase
     assert_equal ['GET Karl'], response.last.body
   end
 
+  def test_post_member_template
+    response = @finder.call Rack::MockRequest.env_for('/collection/member_template', 'REQUEST_METHOD' => 'POST', :input => 'name=Karl')
+    assert_equal 200, response.first
+    assert_equal ['POST Karl'], response.last.body
+  end
+
 end
 
