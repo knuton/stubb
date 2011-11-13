@@ -1,10 +1,14 @@
 Second Mate
 ===========
 
-Specify REST API stubs using your file system.
+Second Mate allows to **set up a REST API stub by putting responses in files** ordered into a directory tree. Resource names, HTTP verbs and response types are **all specified in file names**.
 
-Directory Structure
--------------------
+Additionally, Second Mate allows to specify **sequences of responses** to mock development over time.
+
+Stubb is the second mate.
+
+Directory Structure and Response Files
+--------------------------------------
 
 Directory structure determines API resources.
 
@@ -31,15 +35,25 @@ Stalling sequences respond with response file _n_ after a sequence of _n_ reques
 
 Looping sequences start cycling through the responses after the sequences tail has been responded with.
 
+Parameter Insertion
+-------------------
+
+To allow some amount of dynamicity, Second Mate parses response files as ERB templates and makes GET and POST parameters available in a `params` hash. This can come in handy when stubbing POST and PUT requests or serving JSONP requests.
+
 Dependencies
 ------------
 
-Second Mate depends on <a href="http://github.com/rack/rack">Rack</a> for processing and serving requests.
+Second Mate depends on
+
+  - <a href="http://github.com/rack/rack">Rack</a> for processing and serving requests, and
+  - <a href="https://github.com/wycats/thor">Thor</a> for adding a CLI executable.
 
 License
 -------
 
-See file `LICENSE`.
+Copyright (c) 2011 Johannes Emerich
+
+MIT-style licensing, for details see file `LICENSE`.
 
 <hr>
 
