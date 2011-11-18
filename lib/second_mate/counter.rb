@@ -4,7 +4,8 @@ module SecondMate
   
     def initialize(app)
       @app = app
-      @paths_requests = {}
+      @request_history = {}
+      trap(:INT) { |signal| reset_or_quit signal }
     end
 
     def call(env)
@@ -12,8 +13,18 @@ module SecondMate
       @app.call(env)
     end
 
+    private
     def count(path)
-      @paths_requests[path] = (@paths_requests[path] || 0) + 1
+      @request_history[path] = (@request_history[path] || 0) + 1
+    end
+
+    def reset_or_quit(signal)
+      if @request_history.empty?
+        exit! signal
+      else
+        @request_history.clear
+        puts "\n\nReset request history. Interrupt again to quit.\n\n"
+      end
     end
 
   end
