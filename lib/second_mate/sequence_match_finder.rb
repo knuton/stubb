@@ -2,7 +2,6 @@ module SecondMate
 
   class SequenceMatchFinder < SequenceFinder
     private
-
     def sequenced_path(sequence_index)
       built_path  = []
       last_is_dir = false
@@ -16,7 +15,7 @@ module SecondMate
         elsif match = matching_file(built_path, sequence_index)
           last_is_dir = false
         else
-          return 'NOT FOUND!'
+          return 'NOT FOUND'
         end
 
         built_path << match

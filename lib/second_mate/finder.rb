@@ -1,5 +1,7 @@
 module SecondMate
 
+  class NotFound < Exception; end
+
   class Finder
     
     attr_accessor :request, :root
@@ -18,12 +20,22 @@ module SecondMate
       [404, {"Content-Type" => "text/plain"}, ["Not found."]]
     rescue Exception => e
       debug e.message, e.backtrace.join("\n")
-      [500, {'Content-Type' => 'text/plain'}, 'Internal server error.']
+      [500, {'Content-Type' => 'text/plain'}, ['Internal server error.']]
     end
 
     private
     def respond
-      raise "SecondMate::Finder can not respond directly and needs to be subclassed."
+      response_file_path = projected_path
+      response_body = File.open(response_file_path, 'r')  {|f| f.read }
+      Response.new(
+        response_body,
+        request.params,
+        200,
+        {'Content-Type' => content_type, 'second_mate.response_file' => response_file_path}
+      ).finish
+    rescue NotFound => e
+      debug e.message
+      [404, {}, e.message]
     end
 
     def request_options_as_file_ending

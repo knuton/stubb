@@ -1,16 +1,8 @@
 module SecondMate
 
-  class NoMatch < Exception; end
+  class NoMatch < NotFound; end
 
   class MatchFinder < Finder
-    def respond
-      response_body = File.open(projected_path, 'r')  {|f| f.read }
-      Response.new(response_body, request.params, 200, {'Content-Type' => content_type}).finish
-    rescue NoMatch => e
-      debug e.message
-      [404, {}, "No match."]
-    end
-
     private
     def projected_path
       built_path  = []

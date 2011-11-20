@@ -1,17 +1,9 @@
 module SecondMate
 
-  class NoSuchSequence < Exception; end
+  class NoSuchSequence < NotFound; end
 
   class SequenceFinder < Finder
     private
-    def respond
-      response_body = File.open(projected_path, 'r')  {|f| f.read }
-      Response.new(response_body, request.params, 200, {'Content-Type' => content_type}).finish
-    rescue NoSuchSequence => e
-      debug e.message
-      [404, {}, "No such sequence."]
-    end
-
     def projected_path
       sequence_members = Dir.glob local_path_for(sequenced_path_pattern)
       raise NoSuchSequence.new("Nothing found for sequence pattern `#{sequenced_path_pattern}`.") if sequence_members.empty?
