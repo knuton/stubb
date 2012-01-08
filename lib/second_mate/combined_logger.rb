@@ -1,7 +1,7 @@
 module SecondMate
 
   class CombinedLogger < Rack::CommonLogger
-    FORMAT = %{%s - %s [%s] "%s %s%s %s" %d %s %0.4f "%s"\n}
+    FORMAT = %{%s - %s [%s] "%s %s%s %s" %d %s %0.4f "%s" "%s"\n}
 
     def log(env, status, header, began_at)
       now = Time.now
@@ -19,8 +19,10 @@ module SecondMate
         status.to_s[0..3],
         length,
         now - began_at,
-        header['second_mate.response_file'] || 'NONE'
+        header.delete('second_mate.response_file') || 'NONE',
+        "YAML Frontmatter: #{header.delete('second_mate.yaml_frontmatter') || 'No'}"
       ]
+
     end
 
   end
