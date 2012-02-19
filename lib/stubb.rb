@@ -1,6 +1,6 @@
 require 'rack'
 
-module SecondMate
+module Stubb
 
   class ResponseNotFound < Exception
   end
@@ -23,7 +23,7 @@ module SecondMate
   def self.app(options = {})
     Rack::Builder.new {
       use CombinedLogger
-      use SecondMate::Counter
+      use Counter
       
       run Rack::Cascade.new([SequenceFinder.new(options), NaiveFinder.new(options), SequenceMatchFinder.new(options), MatchFinder.new(options)])
     }.to_app
@@ -38,12 +38,12 @@ module SecondMate
 
 end
 
-require 'second_mate/request'
-require 'second_mate/response'
-require 'second_mate/counter'
-require 'second_mate/combined_logger'
-require 'second_mate/finder'
-require 'second_mate/naive_finder'
-require 'second_mate/sequence_finder'
-require 'second_mate/match_finder'
-require 'second_mate/sequence_match_finder'
+require 'stubb/request'
+require 'stubb/response'
+require 'stubb/counter'
+require 'stubb/combined_logger'
+require 'stubb/finder'
+require 'stubb/naive_finder'
+require 'stubb/sequence_finder'
+require 'stubb/match_finder'
+require 'stubb/sequence_match_finder'

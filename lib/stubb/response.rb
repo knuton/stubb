@@ -1,6 +1,6 @@
 require 'erb'
 
-module SecondMate
+module Stubb
 
   class Response < Rack::Response
 
@@ -29,9 +29,9 @@ module SecondMate
           self.status = data['status'] if data['status']
           # Fill header information
           data['header'].each { |field, value| self.header[field] = value } if data['header'].kind_of? Hash
-          self.header['second_mate.yaml_frontmatter'] = 'Yes'
+          self.header['stubb.yaml_frontmatter'] = 'Yes'
         rescue => e
-          self.header['second_mate.yaml_frontmatter'] = 'Error'
+          self.header['stubb.yaml_frontmatter'] = 'Error'
         end
       end
     end

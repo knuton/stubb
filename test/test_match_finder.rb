@@ -1,11 +1,11 @@
 require 'test/unit'
 
-require 'second_mate'
+require 'stubb'
 
 class TestMatchFinder < Test::Unit::TestCase
 
   def setup
-    @finder = SecondMate::MatchFinder.new :root => 'test/fixtures'
+    @finder = Stubb::MatchFinder.new :root => 'test/fixtures'
   end
 
   def test_trailing_matching_collection

@@ -1,11 +1,11 @@
 require 'test/unit'
 
-require 'second_mate'
+require 'stubb'
 
 class TestResponse < Test::Unit::TestCase
 
   def test_yaml_frontmatter
-    response = SecondMate::Response.new(
+    response = Stubb::Response.new(
       "---\nstatus: 201\nheader:\n  Foo: Baz\n---\nBody",
       {},
       200,
@@ -16,7 +16,7 @@ class TestResponse < Test::Unit::TestCase
   end
 
   def test_templating
-    response = SecondMate::Response.new(
+    response = Stubb::Response.new(
       "<%= params['foo'] %>",
       {'foo' => 'Bar'},
       200,

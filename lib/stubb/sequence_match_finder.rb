@@ -1,4 +1,4 @@
-module SecondMate
+module Stubb
 
   class SequenceMatchFinder < SequenceFinder
     private
@@ -39,7 +39,7 @@ module SecondMate
     end
 
     def matching_directory(current_path)
-      matches = Dir.glob local_path_for(current_path + [SecondMate.matcher_pattern])
+      matches = Dir.glob local_path_for(current_path + [Stubb.matcher_pattern])
       for match in matches
         continue unless File.directory? match
         return File.split(match).last
@@ -48,7 +48,7 @@ module SecondMate
     end
 
     def matching_file(current_path, index)
-      matches = Dir.glob local_path_for(current_path + ["#{SecondMate.matcher_pattern}.#{request_options_as_file_ending(index)}"])
+      matches = Dir.glob local_path_for(current_path + ["#{Stubb.matcher_pattern}.#{request_options_as_file_ending(index)}"])
 
       matches.empty? ? nil : File.split(matches.first).last
     end

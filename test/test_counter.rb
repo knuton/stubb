@@ -1,12 +1,12 @@
 require 'test/unit'
 
-require 'second_mate'
+require 'stubb'
 
 class TestCounter < Test::Unit::TestCase
 
   def setup
     @env = Rack::MockRequest.env_for '/request/path'
-    @counter = SecondMate::Counter.new lambda { |env| [200, {}, [env['REQUEST_SEQUENCE_INDEX']]] }
+    @counter = Stubb::Counter.new lambda { |env| [200, {}, [env['REQUEST_SEQUENCE_INDEX']]] }
   end
 
   def test_initial_request

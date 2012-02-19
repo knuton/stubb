@@ -1,11 +1,11 @@
 require 'test/unit'
 
-require 'second_mate'
+require 'stubb'
 
 class TestNaiveFinder < Test::Unit::TestCase
 
   def setup
-    @finder = SecondMate::NaiveFinder.new :root => 'test/fixtures'
+    @finder = Stubb::NaiveFinder.new :root => 'test/fixtures'
   end
 
   def test_get_collection

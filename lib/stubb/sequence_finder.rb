@@ -1,4 +1,4 @@
-module SecondMate
+module Stubb
 
   class NoSuchSequence < NotFound; end
 

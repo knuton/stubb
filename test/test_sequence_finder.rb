@@ -1,11 +1,11 @@
 require 'test/unit'
 
-require 'second_mate'
+require 'stubb'
 
 class TestSequenceFinder < Test::Unit::TestCase
 
   def setup
-    @finder = SecondMate::SequenceFinder.new :root => 'test/fixtures'
+    @finder = Stubb::SequenceFinder.new :root => 'test/fixtures'
   end
 
   def test_get_stalling_collection

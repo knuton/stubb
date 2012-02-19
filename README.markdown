@@ -141,7 +141,7 @@ will again be the one given in `whales/GET.0.json`, and so forth.
 Dependencies
 ------------
 
-Second Mate depends on
+Stubb depends on
 
   - <a href="http://github.com/rack/rack">Rack</a> for processing and serving requests, and
   - <a href="https://github.com/wycats/thor">Thor</a> for adding a CLI executable.

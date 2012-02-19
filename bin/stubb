@@ -3,18 +3,18 @@
 $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 
 require 'thor'
-require 'second_mate'
+require 'stubb'
 
-module SecondMate
+module Stubb
   class CLI < Thor
     desc 'start', 'Starts the server'
     method_option :port, :type => :numeric, :default => 4040, :aliases => '-p', :desc => 'Specifies the port for the server to use'
     method_option :root, :type => :string, :default => '', :aliases => '-r', :desc => 'Specifies the root directory to serve from'
     method_option :verbose, :type => :boolean, :aliases => '-v', :desc => 'Print debug messages'
     def start
-      SecondMate.run :Port => options[:port], :root => options[:root], :verbose => options[:verbose]
+      Stubb.run :Port => options[:port], :root => options[:root], :verbose => options[:verbose]
     end
   end
 end
 
-SecondMate::CLI.start
+Stubb::CLI.start
