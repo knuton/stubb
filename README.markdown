@@ -132,7 +132,7 @@ Example:
     whales/GET.1.json
     whales/GET.2.json
 
-The fourth request to
+The response to the fourth request to
 
     GET /whales.json HTTP/1.1
 
