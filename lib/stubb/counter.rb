@@ -9,13 +9,14 @@ module Stubb
     end
 
     def call(env)
-      env['stubb.request_sequence_index'] = count env['PATH_INFO']
+      env['stubb.request_sequence_index'] = count(env['REQUEST_METHOD'], env['PATH_INFO'], env['HTTP_ACCEPT'])
       @app.call(env)
     end
 
     private
-    def count(path)
-      @request_history[path] = (@request_history[path] || 0) + 1
+    def count(method, path, accept)
+      fingerprint = "#{method}-#{path}-#{accept}"
+      @request_history[fingerprint] = (@request_history[fingerprint] || 0) + 1
     end
 
     def reset_or_quit(signal)

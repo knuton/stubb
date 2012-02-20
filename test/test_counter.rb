@@ -21,11 +21,22 @@ class TestCounter < Test::Unit::TestCase
     assert_equal 2, result.last.last
   end
 
-  def test_side_effects
+  def test_side_effect_on_different_path
     @counter.call(@env)
     result = @counter.call Rack::MockRequest.env_for('/request/other')
     assert_equal 1, result.last.last
   end
 
-end
+  def test_side_effect_on_different_method
+    @counter.call(@env)
+    result = @counter.call Rack::MockRequest.env_for('/request/path', 'REQUEST_METHOD' => 'POST')
+    assert_equal 1, result.last.last
+  end
 
+  def test_side_effect_on_different_accept_header
+    @counter.call(@env)
+    result = @counter.call Rack::MockRequest.env_for('/request/path', 'HTTP_ACCEPT' => 'application/json')
+    assert_equal 1, result.last.last
+  end
+
+end
