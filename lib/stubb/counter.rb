@@ -9,7 +9,7 @@ module Stubb
     end
 
     def call(env)
-      env['REQUEST_SEQUENCE_INDEX'] = count env['PATH_INFO']
+      env['stubb.request_sequence_index'] = count env['PATH_INFO']
       @app.call(env)
     end
 

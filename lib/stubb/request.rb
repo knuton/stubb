@@ -47,7 +47,7 @@ module Stubb
     end
 
     def sequence_index
-      @env['REQUEST_SEQUENCE_INDEX'] || 1
+      @env['stubb.request_sequence_index'] || 1
     end
 
   end

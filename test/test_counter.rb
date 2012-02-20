@@ -6,13 +6,13 @@ class TestCounter < Test::Unit::TestCase
 
   def setup
     @env = Rack::MockRequest.env_for '/request/path'
-    @counter = Stubb::Counter.new lambda { |env| [200, {}, [env['REQUEST_SEQUENCE_INDEX']]] }
+    @counter = Stubb::Counter.new lambda { |env| [200, {}, [env['stubb.request_sequence_index']]] }
   end
 
   def test_initial_request
     result = @counter.call(@env)
-    assert_equal 1, @env['REQUEST_SEQUENCE_INDEX']
-    assert_equal result.last.last, @env['REQUEST_SEQUENCE_INDEX']
+    assert_equal 1, @env['stubb.request_sequence_index']
+    assert_equal result.last.last, @env['stubb.request_sequence_index']
   end
 
   def test_repeated_request
