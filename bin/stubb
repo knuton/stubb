@@ -7,12 +7,19 @@ require 'stubb'
 
 module Stubb
   class CLI < Thor
-    desc 'start', 'Starts the server'
+    map '-v' => :version
+
+    desc 'server', 'Starts the server'
     method_option :port, :type => :numeric, :default => 4040, :aliases => '-p', :desc => 'Specifies the port for the server to use'
     method_option :root, :type => :string, :default => '', :aliases => '-r', :desc => 'Specifies the root directory to serve from'
     method_option :verbose, :type => :boolean, :aliases => '-v', :desc => 'Print debug messages'
-    def start
+    def server
       Stubb.run :Port => options[:port], :root => options[:root], :verbose => options[:verbose]
+    end
+
+    desc 'version', 'Print the version of Stubb'
+    def version
+      puts Stubb::VERSION
     end
   end
 end
