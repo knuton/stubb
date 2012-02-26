@@ -18,6 +18,30 @@ or alternatively
 
 Additionally, **sequences of responses** to repeated identical requests can be defined through infix numerals in file names.
 
+Getting Started
+---------------
+
+Simply install the Stubb gem by running
+
+    gem install stubb --pre
+
+and you are ready to run the stubb CLI:
+
+    $ stubb
+    Tasks:
+      stubb help [TASK]  # Describe available tasks or one specific task
+      stubb server       # Starts the server
+      stubb version      # Print the version of Stubb
+
+    $ echo Ahoy > hello-world.GET
+    $ ls
+    hello-world.GET
+    $ stubb server &
+    $ curl http://localhost:4040/hello-world
+    Ahoy
+
+By default the server runs on port 4040 and looks for response files in the working directory. Run `stubb help server` for information on configuration options.
+
 Directory Structure and Response Files
 --------------------------------------
 
