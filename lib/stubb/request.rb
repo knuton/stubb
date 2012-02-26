@@ -3,7 +3,7 @@ module Stubb
   class Request < Rack::Request
 
     def path_parts
-      relative_path.split '/'
+      relative_path.empty? ? [''] : relative_path.split('/')
     end
 
     def path_dir_parts

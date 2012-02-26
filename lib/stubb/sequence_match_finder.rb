@@ -29,7 +29,7 @@ module Stubb
     end
 
     def literal_directory(current_path, level)
-      File.directory?(local_path_for(current_path + [level])) ? level: nil
+      File.directory?(local_path_for(current_path + [level])) ? level : nil
     end
 
     def literal_file(current_path, level, index)

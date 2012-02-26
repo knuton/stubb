@@ -19,6 +19,18 @@ class TestSequenceFinder < Test::Unit::TestCase
     assert_equal ['GET collection 3'], response.last.body
   end
 
+  def test_get_stalling_collection_as_root
+    @finder = Stubb::SequenceFinder.new :root => 'test/fixtures/stalling_sequence'
+    response = @finder.call Rack::MockRequest.env_for('/', 'REQUEST_METHOD' => 'GET', 'stubb.request_sequence_index' => 1)
+    assert_equal ['GET collection 1'], response.last.body
+    response = @finder.call Rack::MockRequest.env_for('/', 'REQUEST_METHOD' => 'GET', 'stubb.request_sequence_index' => 2)
+    assert_equal ['GET collection 2'], response.last.body
+    response = @finder.call Rack::MockRequest.env_for('/', 'REQUEST_METHOD' => 'GET', 'stubb.request_sequence_index' => 3)
+    assert_equal ['GET collection 3'], response.last.body
+    response = @finder.call Rack::MockRequest.env_for('/', 'REQUEST_METHOD' => 'GET', 'stubb.request_sequence_index' => 4)
+    assert_equal ['GET collection 3'], response.last.body
+  end
+
   def test_get_stalling_member
     response = @finder.call Rack::MockRequest.env_for('/stalling_sequence/member', 'REQUEST_METHOD' => 'GET', 'stubb.request_sequence_index' => 1)
     assert_equal ['GET member 1'], response.last.body
@@ -38,6 +50,18 @@ class TestSequenceFinder < Test::Unit::TestCase
     response = @finder.call Rack::MockRequest.env_for('/looping_sequence', 'REQUEST_METHOD' => 'GET', 'stubb.request_sequence_index' => 3)
     assert_equal ['GET collection 2'], response.last.body
     response = @finder.call Rack::MockRequest.env_for('/looping_sequence', 'REQUEST_METHOD' => 'GET', 'stubb.request_sequence_index' => 4)
+    assert_equal ['GET collection 0'], response.last.body
+  end
+
+  def test_get_looping_collection_as_root
+    @finder = Stubb::SequenceFinder.new :root => 'test/fixtures/looping_sequence'
+    response = @finder.call Rack::MockRequest.env_for('/', 'REQUEST_METHOD' => 'GET', 'stubb.request_sequence_index' => 1)
+    assert_equal ['GET collection 0'], response.last.body
+    response = @finder.call Rack::MockRequest.env_for('/', 'REQUEST_METHOD' => 'GET', 'stubb.request_sequence_index' => 2)
+    assert_equal ['GET collection 1'], response.last.body
+    response = @finder.call Rack::MockRequest.env_for('/', 'REQUEST_METHOD' => 'GET', 'stubb.request_sequence_index' => 3)
+    assert_equal ['GET collection 2'], response.last.body
+    response = @finder.call Rack::MockRequest.env_for('/', 'REQUEST_METHOD' => 'GET', 'stubb.request_sequence_index' => 4)
     assert_equal ['GET collection 0'], response.last.body
   end
 

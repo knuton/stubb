@@ -14,6 +14,13 @@ class TestNaiveFinder < Test::Unit::TestCase
     assert_equal ['GET collection'], response.last.body
   end
 
+  def test_get_collection_as_root
+    @finder = Stubb::NaiveFinder.new :root => 'test/fixtures/collection'
+    response = @finder.call Rack::MockRequest.env_for('/', 'REQUEST_METHOD' => 'GET')
+    assert_equal 200, response.first
+    assert_equal ['GET collection'], response.last.body
+  end
+
   def test_get_collection_as_json_explicitly
     response = @finder.call Rack::MockRequest.env_for('/collection.json', 'REQUEST_METHOD' => 'GET')
     assert_equal 200, response.first
