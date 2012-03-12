@@ -1,7 +1,6 @@
-Stubb
-=====
+![Stubb](https://github.com/knuton/stubb/raw/master/stubb.png)
 
-Stubb allows to **set up a REST API stub by putting responses in files** organized in a directory tree. Which file is picked in response to a particular HTTP request is primarily determined by the request's **method**, **path** and **accept header**. Thus adding a response for a certain type of request is as easy as adding a file with a matching name. For example, the file
+Stubb is a testing and development tool for frontend developers and anyone else depending on HTTP-requesting resources for their work. It allows **setting up a REST API stub by putting responses in files** organized in a directory tree. Which file is picked in response to a particular HTTP request is primarily determined by the request's **method**, **path** and **accept header**. Thus adding a response for a certain type of request is as easy as adding a file with a matching name. For example, the file
 
     whales/narwhal.GET.json
 
@@ -169,6 +168,11 @@ Stubb depends on
 
   - <a href="http://github.com/rack/rack">Rack</a> for processing and serving requests, and
   - <a href="https://github.com/wycats/thor">Thor</a> for adding a CLI executable.
+
+Acknowledgements
+----------------
+
+The logo for Stubb was kindly provided by Andres Colmenares of [Wawawiwa](https://www.facebook.com/pages/Wawawiwa-design/201009879921770).
 
 License
 -------
