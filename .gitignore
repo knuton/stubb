@@ -1,6 +1,7 @@
 Gemfile.lock
 .DS_Store
 responses/*
+resources/*
 info/*
 .rvmrc
 *.gem
