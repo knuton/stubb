@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'stubb'
-  s.version     = '0.1.rc.1'
-  s.date        = '2012-02-24'
+  s.version     = '0.1.0'
+  s.date        = '2012-04-05'
   s.summary     = 'Specify REST API stubs using your file system'
   s.description = 'Stubb is the second mate.'
   s.authors     = ['Johannes Emerich']
@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
     'README.markdown'
   ]
   s.executables = ['stubb']
-    
+
   s.add_development_dependency 'rake'
 
   s.add_runtime_dependency 'rack', '>=1.2.0'
