@@ -17,7 +17,7 @@ module Stubb
         elsif match = matching_file(built_path)
           last_is_dir = false
         else
-          raise NoMatch
+          raise NoMatch.new("Not found.")
         end
 
         built_path << match

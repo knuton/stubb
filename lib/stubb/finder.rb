@@ -3,7 +3,7 @@ module Stubb
   class NotFound < Exception; end
 
   class Finder
-    
+
     attr_accessor :request, :root
 
     def initialize(options = {})
@@ -35,7 +35,7 @@ module Stubb
       ).finish
     rescue NotFound => e
       debug e.message
-      [404, {}, e.message]
+      [404, {}, [e.message]]
     end
 
     def request_options_as_file_ending
