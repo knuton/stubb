@@ -4,4 +4,5 @@ responses/*
 resources/*
 info/*
 .rvmrc
+.rbenv-version
 *.gem
