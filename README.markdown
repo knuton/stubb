@@ -22,7 +22,7 @@ Getting Started
 
 Simply install the Stubb gem by running
 
-    gem install stubb --pre
+    gem install stubb
 
 and you are ready to run the stubb CLI:
 
