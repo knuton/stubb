@@ -11,6 +11,11 @@ module Stubb
       loop? ?  pick_loop_member(sequence_members) : pick_stall_member(sequence_members)
     end
 
+    def index
+      sequence_members = Dir.glob local_path_for(sequenced_path_pattern)
+      "#{(request.sequence_index - 1) % sequence_members.size}/#{sequence_members.size}"
+    end
+
     def pick_loop_member(sequence_members)
         sequence_members[(request.sequence_index - 1) % sequence_members.size]
     end
