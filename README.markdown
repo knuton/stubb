@@ -183,5 +183,7 @@ MIT-style licensing, for details see file `LICENSE`.
 
 <hr>
 
+[![Build Status](https://travis-ci.org/knuton/stubb.png?branch=master)](https://travis-ci.org/knuton/stubb)
+
 _'Why,' thinks I, 'what's the row? It's not a real leg, only a false leg.'_  
 --Stubb in _Moby Dick_
