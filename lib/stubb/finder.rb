@@ -50,6 +50,10 @@ module Stubb
       File.join root, relative_path
     end
 
+    def glob(pattern)
+      Dir.glob(pattern).sort
+    end
+
     def content_type
       Rack::Mime.mime_type(request.extension) || "text/html"
     end

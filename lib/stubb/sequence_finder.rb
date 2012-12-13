@@ -5,7 +5,7 @@ module Stubb
   class SequenceFinder < Finder
     private
     def projected_path
-      sequence_members = Dir.glob local_path_for(sequenced_path_pattern)
+      sequence_members = glob local_path_for(sequenced_path_pattern)
       raise NoSuchSequence.new("Nothing found for sequence pattern `#{sequenced_path_pattern}`.") if sequence_members.empty?
 
       loop? ?  pick_loop_member(sequence_members) : pick_stall_member(sequence_members)

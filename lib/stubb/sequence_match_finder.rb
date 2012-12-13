@@ -34,12 +34,12 @@ module Stubb
 
     def literal_file(current_path, level, index)
       filename = "#{level}.#{request_options_as_file_ending(index)}"
-      sequence_members = Dir.glob local_path_for(current_path + [filename])
+      sequence_members = glob local_path_for(current_path + [filename])
       sequence_members.empty? ? nil : filename
     end
 
     def matching_directory(current_path)
-      matches = Dir.glob local_path_for(current_path + [Stubb.matcher_pattern])
+      matches = glob local_path_for(current_path + [Stubb.matcher_pattern])
       for match in matches
         continue unless File.directory? match
         return File.split(match).last
@@ -48,7 +48,7 @@ module Stubb
     end
 
     def matching_file(current_path, index)
-      matches = Dir.glob local_path_for(current_path + ["#{Stubb.matcher_pattern}.#{request_options_as_file_ending(index)}"])
+      matches = glob local_path_for(current_path + ["#{Stubb.matcher_pattern}.#{request_options_as_file_ending(index)}"])
 
       matches.empty? ? nil : File.split(matches.first).last
     end
