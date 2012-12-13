@@ -67,7 +67,7 @@ class TestSequenceFinder < Test::Unit::TestCase
 
   def test_get_looping_member
     response = @finder.call Rack::MockRequest.env_for('/looping_sequence/member', 'REQUEST_METHOD' => 'GET', 'stubb.request_sequence_index' => 1)
-    puts @finder.request.sequence_index, response.last.body, @finder.send(:projected_path), @finder.send(:loop?), @finder.send(:index), '#'
+    puts @finder.request.sequence_index, response.last.body, @finder.send(:projected_path), @finder.send(:loop?), @finder.send(:index), @finder.send(:sm), '#'
     assert_equal ['GET member 0'], response.last.body
     response = @finder.call Rack::MockRequest.env_for('/looping_sequence/member', 'REQUEST_METHOD' => 'GET', 'stubb.request_sequence_index' => 2)
     puts @finder.request.sequence_index, response.last.body, @finder.send(:projected_path), @finder.send(:loop?), @finder.send(:index), '#'
