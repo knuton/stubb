@@ -1,7 +1,7 @@
 module Stubb
 
   class Counter
-  
+
     def initialize(app)
       @app = app
       @request_history = {}
