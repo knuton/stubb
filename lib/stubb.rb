@@ -2,7 +2,7 @@ require 'rack'
 
 module Stubb
 
-  VERSION = '0.1.0'
+  VERSION = '0.1.1'
 
   class ResponseNotFound < Exception
   end
@@ -26,7 +26,7 @@ module Stubb
     Rack::Builder.new {
       use CombinedLogger
       use Counter
-      
+
       run Rack::Cascade.new([SequenceFinder.new(options), NaiveFinder.new(options), SequenceMatchFinder.new(options), MatchFinder.new(options)])
     }.to_app
   end
