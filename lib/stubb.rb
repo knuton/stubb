@@ -2,7 +2,7 @@ require 'rack'
 
 module Stubb
 
-  VERSION = '0.1.1'
+  VERSION = '0.1.2'
 
   class ResponseNotFound < Exception
   end
