@@ -145,7 +145,7 @@ will be the one given in `whales/GET.3.json`.
 
 ### Looping Sequences (0..._n-1_)
 
-A *stalling sequence* starts from the first response file in the response sequence after _n_ requests of the same type. Looping sequences are specified by adding response files with indices 0 through _n_-1.
+A *looping sequence* starts from the first response file in the response sequence after _n_ requests of the same type. Looping sequences are specified by adding response files with indices 0 through _n_-1.
 
     GET.0.format, GET.1.format, ..., GET._n-2_.format, GET._n-1_.format
 
