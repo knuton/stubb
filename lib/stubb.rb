@@ -27,7 +27,12 @@ module Stubb
       use CombinedLogger
       use Counter
 
-      run Rack::Cascade.new([SequenceFinder.new(options), NaiveFinder.new(options), SequenceMatchFinder.new(options), MatchFinder.new(options)])
+      run Rack::Cascade.new [
+        SequenceFinder.new(options),
+        NaiveFinder.new(options),
+        SequenceMatchFinder.new(options),
+        MatchFinder.new(options)
+      ]
     }.to_app
   end
 
