@@ -31,7 +31,7 @@ module Stubb
         response_body,
         request.params,
         200,
-        {'Content-Type' => content_type, 'stubb.response_file' => response_file_path}
+        {'Content-Type' => content_type, 'X-Stubb-Response-File' => response_file_path}
       ).finish
     rescue NotFound => e
       debug e.message

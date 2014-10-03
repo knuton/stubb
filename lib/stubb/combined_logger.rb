@@ -19,8 +19,8 @@ module Stubb
         status.to_s[0..3],
         length,
         now - began_at,
-        header.delete('stubb.response_file') || 'NONE',
-        "YAML Frontmatter: #{header.delete('stubb.yaml_frontmatter') || 'No'}"
+        header['X-Stubb-Response-File'] || 'None',
+        "YAML Frontmatter: #{header['X-Stubb-Frontmatter'] || 'No'}"
       ]
 
     end

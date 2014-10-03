@@ -30,10 +30,12 @@ module Stubb
           self.status = data['status'] if data['status']
           # Fill header information
           data['header'].each { |field, value| self.header[field] = value } if data['header'].kind_of? Hash
-          self.header['stubb.yaml_frontmatter'] = 'Yes'
-        rescue => e
-          self.header['stubb.yaml_frontmatter'] = 'Error'
+          self.header['X-Stubb-Frontmatter'] = 'Yes'
+        rescue
+          self.header['X-Stubb-Frontmatter'] = 'Error'
         end
+      else
+        self.header['X-Stubb-Frontmatter'] = 'No'
       end
     end
 
