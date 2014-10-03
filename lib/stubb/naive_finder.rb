@@ -1,7 +1,7 @@
 module Stubb
 
   class NaiveFinder < Finder
-    
+
     private
     def projected_path
       relative_path = if File.directory? local_path_for(request.resource_path)
