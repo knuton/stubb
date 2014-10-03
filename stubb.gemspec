@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'stubb'
-  s.version     = '0.1.3'
-  s.date        = '2013-01-05'
+  s.version     = '0.2.0'
+  s.date        = '2014-10-03'
   s.summary     = 'Specify REST API stubs using your file system'
   s.description = 'Stubb is the second mate.'
   s.authors     = ['Johannes Emerich']
