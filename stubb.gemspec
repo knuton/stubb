@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.version     = '0.2.0'
   s.date        = '2014-10-03'
   s.summary     = 'Specify REST API stubs using your file system'
-  s.description = 'Stubb is the second mate.'
+  s.description = 'Specify REST API stubs using your file system'
   s.authors     = ['Johannes Emerich']
   s.email       = 'johannes@emerich.de'
   s.homepage    = 'http://github.com/knuton/stubb'
